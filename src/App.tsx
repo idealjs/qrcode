@@ -21,7 +21,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="h-screen bg-slate-50 p-3 text-slate-900 lg:flex lg:flex-col lg:overflow-hidden lg:p-6">
+    <div className="bg-slate-50 p-3 text-slate-900 lg:flex lg:flex-col lg:p-6">
       <header className="shrink-0 pb-4 lg:pb-6">
         <div className="rounded-3xl border border-slate-200 bg-white/80 px-5 py-4 shadow-sm shadow-slate-900/5 backdrop-blur">
           <div className="space-y-2">
@@ -38,7 +38,7 @@ export default function App() {
         </div>
       </header>
 
-      <div className="flex-1 lg:flex lg:overflow-hidden">
+      <div className="flex-1 lg:flex">
         <section className="lg:w-1/3 lg:pr-6">
           <QrcodeController />
           <div className="mt-4 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600 shadow-sm shadow-slate-900/5">
@@ -47,7 +47,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="flex-1 lg:flex lg:flex-col">
+        <section className="flex-1 lg:flex lg:flex-col lg:items-center">
           <QrcodePreview
             ref={previewSvgRef}
             noise={previewModel?.noise ?? []}
