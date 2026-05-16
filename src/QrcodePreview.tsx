@@ -1,6 +1,10 @@
 import { forwardRef } from "react";
+import {
+  getQrcodeBackgroundCircle,
+  getQrcodeBackgroundFill,
+} from "./qrcodeBackground";
 import { type PreviewModel, VIEWBOX_SIZE } from "./useQrcodePreviewModel";
-import { useQrcodeStore } from "./useQrcodeStore";
+import { QR_SIZE, useQrcodeStore } from "./useQrcodeStore";
 
 type IQrcodePreviewProps = {
   noise: PreviewModel["noise"];
@@ -12,14 +16,30 @@ export const QrcodePreview = forwardRef<SVGSVGElement, IQrcodePreviewProps>(
   function QrcodePreview(props, ref) {
     const { noise, modules, finders } = props;
     const fg = useQrcodeStore((s) => s.fg);
+    const bg = useQrcodeStore((s) => s.bg);
+    const ringWidth = useQrcodeStore((s) => s.ringWidth);
+    const backgroundFill = getQrcodeBackgroundFill(bg);
+    const backgroundCircle = getQrcodeBackgroundCircle({
+      qrSize: QR_SIZE,
+      ringWidth,
+      viewBoxSize: VIEWBOX_SIZE,
+    });
     return (
       <svg
         ref={ref}
         xmlns="http://www.w3.org/2000/svg"
         viewBox={`0 0 ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`}
-        className="lg:flex-1"
+        className="mx-auto aspect-square w-full max-w-[42rem] lg:size-[min(60vw,calc(100vh-13rem),42rem)] lg:max-w-none lg:shrink-0"
       >
         <title>QR code preview</title>
+        {backgroundFill ? (
+          <circle
+            cx={backgroundCircle.cx}
+            cy={backgroundCircle.cy}
+            r={backgroundCircle.radius}
+            fill={backgroundFill}
+          />
+        ) : null}
         <g fill={fg}>
           {noise.map((item) => (
             <circle
